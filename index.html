@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Portfolio of Philip Manuel P. De Vera, BSIT student specializing in Database Systems Technology.">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Database Systems Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: single column portfolio. Hero pairs the intro with a SQL query card; one featured case study; quiet supporting sections. */
+:root {
+  --bg: #F1F5F8;
+  --surface: #FFFFFF;
+  --ink: #13202B;
+  --muted: #52636F;
+  --line: #D5DEE5;
+  --accent: #2355D8;
+  --accent-ink: #FFFFFF;
+  --ph: #FFF1B8;
+  --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F171D; --surface: #17222B; --ink: #E6EDF2; --muted: #9AABB8;
+    --line: #2A3A46; --accent: #7FA6FF; --accent-ink: #0F171D; --ph: #3B3516;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F171D; --surface: #17222B; --ink: #E6EDF2; --muted: #9AABB8;
+  --line: #2A3A46; --accent: #7FA6FF; --accent-ink: #0F171D; --ph: #3B3516;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 16px/1.6 var(--font-body);
+  padding-block: 0 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 980px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 5.5vw, 3.1rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.label { font: 500 0.72rem/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.ph { background: var(--ph); border-radius: 3px; padding: 0 4px; }
+
+nav { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; align-items: center; padding-block: 20px; border-bottom: 1px solid var(--line); }
+nav .who { font: 700 1rem var(--font-display); }
+nav ul { display: flex; flex-wrap: wrap; gap: 4px 20px; list-style: none; margin: 0; padding: 0; font-size: 0.9rem; }
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--accent); }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: center; padding-block: 56px 48px; }
+.hero .lead { color: var(--muted); font-size: 1.1rem; max-width: 52ch; margin-top: 18px; }
+.hero .stack { display: flex; flex-direction: column; gap: 18px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 0.95rem; text-decoration: none; border: 1px solid var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.ghost { color: var(--accent); }
+
+.query { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; min-width: 0; }
+.query .bar { display: flex; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+.query pre { margin: 0; padding: 16px; font: 400 0.9rem/1.7 var(--font-mono); overflow-x: auto; }
+.kw { color: var(--accent); font-weight: 500; }
+.str { color: var(--muted); }
+.result { border-top: 1px solid var(--line); overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+.result table { font-family: var(--font-mono); font-size: 0.82rem; }
+th, td { text-align: left; padding: 9px 16px; vertical-align: top; }
+th { font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+
+section { padding-block: 48px; border-top: 1px solid var(--line); }
+section > .label { display: block; margin-bottom: 10px; }
+section > h2 { margin-bottom: 20px; }
+.about { max-width: 66ch; display: grid; gap: 14px; color: var(--ink); }
+
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+.skill { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.skill p { color: var(--muted); font-size: 0.9rem; }
+
+.project { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: clamp(18px, 4vw, 32px); display: grid; gap: 28px; }
+.project .top { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; }
+.project .summary { display: grid; gap: 12px; align-content: start; }
+.project .summary p { color: var(--muted); }
+.tag { display: inline-block; font: 500 0.72rem var(--font-mono); letter-spacing: 0.06em; padding: 4px 8px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.roles { border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; min-width: 0; }
+.case { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.case > div { display: grid; gap: 6px; align-content: start; }
+.case p { color: var(--muted); font-size: 0.95rem; }
+.shots { display: grid; gap: 12px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tab { font: 500 0.85rem var(--font-body); padding: 8px 14px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--muted); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.shot { margin: 0; display: grid; gap: 8px; }
+.shot img { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 8px; }
+.shot figcaption { color: var(--muted); font-size: 0.9rem; }
+.erdfig { margin: 0; display: grid; gap: 10px; justify-items: center; }
+.erdfig .label { justify-self: start; }
+.erdfig img { display: block; width: 100%; max-width: 640px; height: auto; background: #fff; border: 1px solid var(--line); border-radius: 8px; }
+.erdfig figcaption { color: var(--muted); font-size: 0.9rem; justify-self: start; }
+.erd { border: 1.5px dashed var(--line); border-radius: 8px; min-height: 140px; display: grid; place-items: center; text-align: center; padding: 16px; color: var(--muted); font-size: 0.9rem; }
+
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 6px; align-content: start; }
+.card p { color: var(--muted); font-size: 0.95rem; }
+
+.contact dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 24px; margin: 0; }
+.contact dt { color: var(--muted); font: 500 0.78rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; padding-top: 3px; }
+.contact dd { margin: 0; overflow-wrap: anywhere; }
+footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 760px) {
+  .hero, .project .top { grid-template-columns: minmax(0, 1fr); }
+  .hero { padding-block: 36px 32px; gap: 28px; }
+  section { padding-block: 36px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn, nav a { transition: background-color .15s, color .15s; }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <span class="who">Philip Manuel P. De Vera</span>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#project">Project</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="stack">
+      <span class="label">Database Systems Technology</span>
+      <h1>I design databases that keep records accurate and easy to report on.</h1>
+      <p class="lead">BS Information Technology student at Nueva Ecija University of Science and Technology, specializing in Database Systems Technology. I work with relational design, SQL, and systems that people in real roles use every day.</p>
+      <div class="cta">
+        <a class="btn primary" href="#project">See my featured project</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="query" aria-label="A SQL query describing me">
+      <div class="bar"><span class="label">query.sql</span><span class="label">1 row</span></div>
+<pre><span class="kw">SELECT</span> name, program, school, focus
+<span class="kw">FROM</span>   student
+<span class="kw">WHERE</span>  open_to = <span class="str">'internship'</span>;</pre>
+      <div class="result">
+        <table>
+          <thead><tr><th>name</th><th>program</th><th>school</th><th>focus</th></tr></thead>
+          <tbody><tr>
+            <td>Philip Manuel P. De Vera</td>
+            <td>Database Systems Technology</td>
+            <td>NEUST</td>
+            <td>Database design, SQL</td>
+          </tr></tbody>
+        </table>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <span class="label">About</span>
+    <h2>What I do</h2>
+    <div class="about">
+      <p>I’m a BSIT student specializing in Database Systems Technology who genuinely enjoys turning messy records into clean, well-structured tables. My coursework and hands-on projects focus on relational databases, Entity-Relationship Diagrams (ERDs), normalization, and building reliable database-driven applications.</p>
+      <p>For my capstone project, I collaborated with two teammates to build ColManSys, a collection management system tailored for Our Mother of Perpetual Help Parish in Cabanatuan City. I am currently looking for an internship or entry-level role in database administration, data analysis, or systems development where I can help organize data and build practical software solutions.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <span class="label">Skills</span>
+    <h2>What I work with</h2>
+    <div class="skills">
+      <div class="skill"><h3>SQL</h3><p>Writing queries, reports, and normalized database schemas.</p></div>
+      <div class="skill"><h3>Database design</h3><p>Entity-relationship diagrams, keys, and relationships.</p></div>
+      <div class="skill"><h3>Normalization</h3><p>Removing duplicate data so records stay consistent.</p></div>
+      <div class="skill"><h3>Data modeling</h3><p>Turning how an organization works into tables.</p></div>
+      <div class="skill"><h3>PostgreSQL</h3><p>Keys, constraints, transactions, audit tables, and backup and restore.</p></div>
+      <div class="skill"><h3>Web development</h3><p>PHP, HTML, CSS, and JavaScript, built module by module.</p></div>
+    </div>
+  </section>
+
+  <section id="project">
+    <span class="label">Featured project</span>
+    <h2>ColManSys</h2>
+    <article class="project">
+      <div class="top">
+        <div class="summary">
+          <h3>Collection management system for Our Mother of Perpetual Help Parish</h3>
+          <p>A web-based system that records the parish's collections, donations, and expenses, tracks budgets and funds, and produces financial reports. It replaces an older system from 2016 that had no approval workflow, ledger, audit trail, or restore function.</p>
+          <div class="tags">
+            <span class="tag">Capstone</span>
+            <span class="tag">Role-based access</span>
+            <span class="tag">Double-entry ledger</span>
+            <span class="tag">Audit trail</span>
+            <span class="tag">Voucher approval</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">PHP</span>
+            <span class="tag">HTML · CSS · JavaScript</span>
+          </div>
+        </div>
+        <div class="roles">
+          <table>
+            <thead><tr><th>Role</th><th>Main work</th></tr></thead>
+            <tbody>
+              <tr><td>Admin</td><td>Oversight, audit logs, final approval</td></tr>
+              <tr><td>Treasurer</td><td>First-level review, balances, reports</td></tr>
+              <tr><td>Collection Officer</td><td>Collections, receipts, vouchers</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="case">
+        <div><span class="label">Problem</span><p>The parish's old system had no voucher approval, double-entry ledger, fund and budget tracking, audit trail, or restore. Staff re-encoded records in spreadsheets, which caused repeated entries, errors, and late reports.</p></div>
+        <div><span class="label">Database design</span><p>A normalized relational schema in PostgreSQL with keys and constraints, time-stamped transactions, audit tables, and balanced double-entry posting. Approved transactions cannot be deleted. Corrections go through logged void or refund entries.</p></div>
+        <div><span class="label">My role</span><p>Lead developer. I built and fixed the system, and I was in charge of the database and the diagrams (ERDs and data flow diagrams).</p></div>
+        <div><span class="label">Result</span><p>Evaluated with the ISO/IEC 25010 quality model. Six IT experts gave a grand mean of 3.59 (Very Functional). Four end-users gave 3.53 (Very Acceptable).</p></div>
+      </div>
+
+      <div class="shots">
+        <span class="label">System screenshots</span>
+        <div class="tabs" role="tablist" aria-label="Dashboards by role">
+          <button class="tab" role="tab" id="tab-admin" aria-selected="true" aria-controls="shot-admin" type="button">Admin</button>
+          <button class="tab" role="tab" id="tab-treasurer" aria-selected="false" aria-controls="shot-treasurer" type="button">Treasurer</button>
+          <button class="tab" role="tab" id="tab-collector" aria-selected="false" aria-controls="shot-collector" type="button">Collection Officer</button>
+        </div>
+        <figure class="shot" id="shot-admin" role="tabpanel" aria-labelledby="tab-admin">
+          <a href="admin-dashboard.png" target="_blank" rel="noopener"><img src="admin-dashboard.png" alt="ColManSys Admin dashboard showing active users, audit log activity, disbursements awaiting release, and audited liquidations" width="1917" height="971"></a>
+          <figcaption>Admin: manages user accounts, reviews audit security logs, and gives final approval to disbursements the Treasurer has verified.</figcaption>
+        </figure>
+        <figure class="shot" id="shot-treasurer" role="tabpanel" aria-labelledby="tab-treasurer" hidden>
+          <a href="treasurer-dashboard.png" target="_blank" rel="noopener"><img src="treasurer-dashboard.png" alt="ColManSys Treasurer dashboard showing requests awaiting first-level review, cash and digital fund balances, and a monthly inflow and outflow chart" width="1917" height="971" loading="lazy"></a>
+          <figcaption>Treasurer: does the first-level review of disbursements, monitors cash and digital fund balances, and manages financial reports.</figcaption>
+        </figure>
+        <figure class="shot" id="shot-collector" role="tabpanel" aria-labelledby="tab-collector" hidden>
+          <a href="collection-officer-dashboard.png" target="_blank" rel="noopener"><img src="collection-officer-dashboard.png" alt="ColManSys Collection Officer dashboard showing daily collections, receipts issued, and shortcuts for petty cash and voucher requests" width="1917" height="971" loading="lazy"></a>
+          <figcaption>Collection Officer: records daily collections, issues receipts, and files petty cash and voucher requests.</figcaption>
+        </figure>
+      </div>
+
+      <figure class="erdfig">
+        <span class="label">Entity-relationship diagram</span>
+        <a href="erd.png" target="_blank" rel="noopener"><img src="erd.png" alt="ColManSys entity-relationship diagram with ten tables: users, collection, collection types, receipts, expenses, projects, liquidation, expense documents, audit logs, and financial reports" width="1282" height="1512" loading="lazy"></a>
+        <figcaption>The ColManSys database: ten tables linking users, collections and receipts, expenses and liquidation, supporting documents, audit logs, and financial reports. Click to view full size.</figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <section id="education">
+    <span class="label">Education and activities</span>
+    <h2>Where I study</h2>
+    <div class="two">
+      <div class="card">
+        <h3>Nueva Ecija University of Science and Technology</h3>
+        <p>BS Information Technology, specialization in Database Systems Technology, College of Information and Communications Technology 2023 to 2027 (expected graduation)</p>
+      </div>
+      <div class="card">
+        <h3>Data Geek Society</h3>
+        <p>Treasurer. I manage the society's budget, compute what it needs, and handle the purchasing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <span class="label">Certifications</span>
+    <h2>What I've completed</h2>
+    <div class="two">
+      <div class="card"><h3>IT Specialist: Databases</h3><p>Certiport / Pearson VUE, October 2026</p></div>
+      <div class="card"><h3>Database 101: Data Storage, SQL and Query Optimization</h3><p>UpskillTechPH, August 2026</p></div>
+      <div class="card"><h3>AI Tools 101: How to Use Google Gemini Like a Pro</h3><p>UpskillTechPH, August 2026</p></div>
+      <div class="card"><h3>Learning Advocate 2026 Series: Emerging IT Innovations</h3><p>UpskillTechPH, August 2026</p></div>
+      <div class="card"><h3>Data-Driven Crisis Management</h3><p>Armstrong Training and Development Services, August 2026</p></div>
+      <div class="card"><h3>Employability Skills: JobReady (With AI)</h3><p>Wadhwani Foundation, seven microcertificates, August to October 2026</p></div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <span class="label">Contact</span>
+    <h2>Let's talk</h2>
+    <dl>
+      <dt>Email</dt><dd>pmpradodevera@gmail.com</dd>
+      <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/philip-manuel-de-vera" target="_blank" rel="noopener">linkedin.com/in/philip-manuel-de-vera</a></dd>
+      <dt>Facebook</dt><dd><a href="https://www.facebook.com/PmPradoDeVera" target="_blank" rel="noopener">facebook.com/PmPradoDeVera</a></dd>
+      <dt>GitHub</dt><dd><a href="https://github.com/pmpradodevera" target="_blank" rel="noopener">github.com/pmpradodevera</a></dd>
+      <dt>Resume</dt><dd><a href="Philip_Manuel_De_Vera_Resume.pdf" target="_blank" rel="noopener">View resume (PDF)</a></dd>
+    </dl>
+  </section>
+
+  <footer>Database Systems Technology, Nueva Ecija University of Science and Technology</footer>
+</div>
+<script>
+(function () {
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (o) {
+        var on = o === t;
+        o.setAttribute('aria-selected', on ? 'true' : 'false');
+        document.getElementById(o.getAttribute('aria-controls')).hidden = !on;
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
